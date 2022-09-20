@@ -1,8 +1,9 @@
+require("card")
 require("constant")
 
 
----@class JokerCard 
----@field public joker integer
+---@class JokerCard : Card
+---@field private joker integer
 JokerCard = {}
 JokerCard.__index = JokerCard
 JokerCard.super = Card
@@ -25,4 +26,10 @@ function JokerCard:__tostring()
     else
         return "LJ"
     end
+end
+
+
+---@return integer
+function JokerCard:getJoker()
+    return self.joker
 end

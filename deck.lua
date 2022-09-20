@@ -2,8 +2,8 @@ require("card")
 
 
 ---@class Deck 
----@field public cards Card[]
-Deck = {cards = {}} 
+---@field private cards table
+Deck = {} 
 Deck.__index = Deck
 
 
@@ -30,7 +30,23 @@ function Deck:deal()
     if cardsCount <= 0 then
         return nil
     end
-    
+
     return table.remove(self.cards, cardsCount)
 end
 
+
+---@return table
+function Deck:getCards()
+    return self.cards
+end
+
+
+---@param cards table
+function Deck:setCards(cards)
+    self.cards = cards
+end
+
+
+function Deck:sortCards()
+    error("Should be implemented in subclass")
+end

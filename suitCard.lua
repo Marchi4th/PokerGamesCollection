@@ -1,9 +1,10 @@
+require("card")
 require("constant")
 
 
----@class SuitCard 
----@field public suit integer
----@field public rank integer
+---@class SuitCard : Card
+---@field private suit integer
+---@field private rank integer
 SuitCard = {}
 SuitCard.__index = SuitCard
 SuitCard.super = Card
@@ -24,4 +25,16 @@ function SuitCard.new(suit, rank)
     instance.suit = suit
     instance.rank = rank
     return instance
+end
+
+
+---@return integer
+function SuitCard:getSuit()
+    return self.suit
+end
+
+
+---@return integer
+function SuitCard:getRank()
+    return self.rank
 end

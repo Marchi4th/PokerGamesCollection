@@ -1,15 +1,17 @@
 ---@class Player
----@field public hand table 
+---@field public hand Deck 
 ---@field public name string
-Player = {hand = {}, name = ""}
+Player = {}
 Player.__index = Player
 
 
+---@param name string
+---@param hand Deck
 ---@return Player
-function Player.new(name)
+function Player.new(name, hand)
     local instance = {}
     setmetatable(instance, Player)
-    instance.hand = {}
+    instance.hand = hand
     instance.name = name
     return instance
 end
@@ -18,29 +20,26 @@ end
 ---@param deck Deck 
 function Player:draw(deck)
     local card = deck:deal()
-    table.insert(self.hand, card)
+    table.insert(self.hand:getCards(), card)
 end
 
 
 ---@param card Card
 function Player:play(card)
-    --TODO: play a card
     print("play this card" .. tostring(card))
 end
 
 
 function Player:showHand()
     local str = ""
-    for i = 1, #self.hand do
-        str = str .. tostring(self.hand[i]) .. " "
+    local cards = self.hand:getCards()
+    for i = 1, #cards do
+        str = str .. tostring(cards[i]) .. " "
     end
     print(self.name .. ": " .. str)
 end
 
 
----@param compare function
-function Player:sortHand(compare)
-    table.sort(self.hand, function (a, b)
-        return compare(a, b)
-    end)
+function Player:sortHand()
+    self.hand:sortCards()
 end

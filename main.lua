@@ -1,6 +1,6 @@
-require("deck")
-require("player")
 require("poker")
+require("player")
+
 
 local function main(...)
     ---@type Player[]  
@@ -11,21 +11,22 @@ local function main(...)
     ---@type integer
     local playerCount = arguements[1]
 
-    local deck = Deck.new()
     for i = 1, playerCount do
-        players[i] = Player.new(i .. "P")
+        local playerHand = PokerDeck.new()
+        players[i] = Player.new(i .. "P", playerHand)
     end
 
-    deck.cards = Poker.createDeck()
+    local deck = Poker.createPokerDeck()
     deck:shuffleCards()
+    local deckCards = deck:getCards()
 
-    for i = 1, #deck.cards do
+    for i = 1, #deckCards do
         local playerIndex = i % playerCount ~= 0 and i % playerCount or playerCount
         players[playerIndex]:draw(deck)
     end
 
     for i = 1, playerCount do
-        players[i]:sortHand(Poker.compareCard)
+        players[i]:sortHand()
         players[i]:showHand()
     end
 end
